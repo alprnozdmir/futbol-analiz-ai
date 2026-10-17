@@ -99,7 +99,7 @@ document.getElementById("load").addEventListener("click", async () => {
   const now = new Date();
   const dateFrom = now.toISOString().slice(0, 10);
   const end = new Date(now);
-  end.setDate(end.getDate() + (dateMode === "upcoming" ? 14 : 0));
+  end.setDate(end.getDate() + (dateMode === "upcoming" ? 9 : 0));
   const dateTo = end.toISOString().slice(0, 10);
 
   const params = new URLSearchParams({ dateFrom, dateTo });
