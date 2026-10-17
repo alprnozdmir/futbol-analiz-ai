@@ -88,10 +88,55 @@
   </main>
   <footer>Futbol Analiz AI · Veriler bağlandığında güncellenecek</footer>
   <script>
-    document.getElementById('load').addEventListener('click', () => {
-      document.getElementById('message').textContent =
-        'Henüz gerçek veri kaynağı bağlanmadı. Sonraki aşamada otomatik veri bağlantısı kurulacak.';
-    });
+    
+const API_BASE = "https://futbol-analiz-api.alperenozdemir4884.workers.dev";
+
+document.getElementById("load").addEventListener("click", async () => {
+  const message = document.getElementById("message");
+  const league = document.getElementById("league").value;
+  const dateMode = document.getElementById("date").value;
+
+  const now = new Date();
+  const dateFrom = now.toISOString().slice(0, 10);
+  const end = new Date(now);
+  end.setDate(end.getDate() + (dateMode === "upcoming" ? 14 : 0));
+  const dateTo = end.toISOString().slice(0, 10);
+
+  const params = new URLSearchParams({ dateFrom, dateTo });
+  if (league !== "all") params.set("competition", league);
+
+  message.textContent = "Maçlar yükleniyor...";
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/matches?${params.toString()}`
+    );
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || `HTTP ${response.status}`);
+    }
+
+    if (!data.matches || data.matches.length === 0) {
+      message.textContent =
+        "Bu tarih aralığında maç bulunamadı. Başka bir lig veya tarih seç.";
+      return;
+    }
+
+    message.textContent = data.matches.map(match => {
+      const home = match.homeTeam?.name || "Ev sahibi";
+      const away = match.awayTeam?.name || "Deplasman";
+      const date = match.utcDate
+        ? new Date(match.utcDate).toLocaleString("tr-TR")
+        : "Tarih belirtilmemiş";
+      return `${date} — ${home} - ${away}`;
+    }).join("\n\n");
+  } catch (error) {
+    message.textContent =
+      "Maçlar yüklenemedi: " + error.message;
+  }
+});
+
   </script>
 </body>
 </html>
