@@ -1,1 +1,94 @@
 
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10141d">
+  <title>Futbol Analiz AI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: #10141d; color: #f4f6fb;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    header { padding: 24px 18px; background: #171e2a; }
+    header h1 { margin: 0 0 7px; font-size: 25px; }
+    header p { margin: 0; color: #aab5c7; font-size: 14px; }
+    main { padding: 18px; max-width: 650px; margin: auto; }
+    .panel {
+      background: #1a2331; border: 1px solid #303b4e;
+      border-radius: 16px; padding: 17px; margin-bottom: 16px;
+    }
+    h2 { font-size: 18px; margin: 0 0 14px; }
+    label { display: block; color: #b8c3d5; margin: 12px 0 7px; }
+    select, button {
+      width: 100%; padding: 13px; border-radius: 10px;
+      font-size: 15px;
+    }
+    select {
+      color: white; background: #101722; border: 1px solid #39465b;
+    }
+    button {
+      border: 0; background: #36d399; color: #092018;
+      font-weight: 700; margin-top: 15px;
+    }
+    .status { color: #c0cad9; line-height: 1.6; font-size: 14px; }
+    .tag {
+      display: inline-block; background: #263c37; color: #6ee7b7;
+      padding: 6px 10px; border-radius: 20px; font-size: 12px;
+    }
+    footer { text-align: center; padding: 18px; color: #8793a7; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>⚽ Futbol Analiz AI</h1>
+    <p>Veriye dayalı maç analizi ve olasılık sistemi</p>
+  </header>
+  <main>
+    <section class="panel">
+      <span class="tag">Yeni proje · Sürüm 0.1</span>
+      <h2 style="margin-top:15px">Maç merkezi</h2>
+      <label for="league">Lig seçimi</label>
+      <select id="league">
+        <option value="all">Desteklenen tüm ligler</option>
+        <option value="TUR">Türkiye</option>
+        <option value="ENG">İngiltere</option>
+        <option value="ESP">İspanya</option>
+        <option value="GER">Almanya</option>
+        <option value="ITA">İtalya</option>
+        <option value="FRA">Fransa</option>
+      </select>
+      <label for="date">Maç tarihi</label>
+      <select id="date">
+        <option value="today">Bugün</option>
+        <option value="upcoming">Yaklaşan maçlar</option>
+      </select>
+      <button id="load">Maçları getir</button>
+      <p id="message" class="status" aria-live="polite">
+        Veri bağlantısı henüz kurulmadı. Gerçek maçlar bağlandıktan sonra burada gösterilecek.
+      </p>
+    </section>
+    <section class="panel">
+      <h2>Analiz motoru</h2>
+      <p class="status">
+        Maç verileri, takım formu ve gol istatistikleri hazır olduğunda
+        sonuç olasılıkları hesaplanacak. Eksik veriler tahmin olarak sunulmayacak.
+      </p>
+    </section>
+    <section class="panel">
+      <h2>Tahmin kategorileri</h2>
+      <p class="status">1X2 · 2,5 üst/alt · Karşılıklı gol · Olası skor</p>
+      <p class="status">Tahminler kesin sonuç değil, istatistiksel olasılıklar olacaktır.</p>
+    </section>
+  </main>
+  <footer>Futbol Analiz AI · Veriler bağlandığında güncellenecek</footer>
+  <script>
+    document.getElementById('load').addEventListener('click', () => {
+      document.getElementById('message').textContent =
+        'Henüz gerçek veri kaynağı bağlanmadı. Sonraki aşamada otomatik veri bağlantısı kurulacak.';
+    });
+  </script>
+</body>
+</html>
