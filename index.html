@@ -125,14 +125,45 @@ document.getElementById("load").addEventListener("click", async () => {
       return;
     }
 
-    message.textContent = data.matches.map(match => {
-      const home = match.homeTeam?.name || "Ev sahibi";
-      const away = match.awayTeam?.name || "Deplasman";
-      const date = match.utcDate
-        ? new Date(match.utcDate).toLocaleString("tr-TR")
-        : "Tarih belirtilmemiş";
-      return `${date} — ${home} - ${away}`;
-    }).join("\n\n");
+    i
+message.innerHTML = data.matches.map(match => {
+  const home = match.homeTeam?.name || "Ev sahibi";
+  const away = match.awayTeam?.name || "Deplasman";
+
+  const date = match.utcDate
+    ? new Date(match.utcDate).toLocaleString("tr-TR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    : "Tarih belirtilmemiş";
+
+  return `
+    <div style="
+      background:#10141d;
+      border:1px solid #30394a;
+      border-radius:12px;
+      padding:14px;
+      margin:10px 0;
+    ">
+      <div style="color:#aab5c7;font-size:13px;margin-bottom:8px;">
+        ${date}
+      </div>
+      <div style="font-weight:600;font-size:16px;">
+        ${home}
+      </div>
+      <div style="color:#aab5c7;text-align:center;margin:6px 0;">
+        VS
+      </div>
+      <div style="font-weight:600;font-size:16px;">
+        ${away}
+      </div>
+    </div>
+  `;
+}).join("");
+
   } catch (error) {
     message.textContent =
       "Maçlar yüklenemedi: " + error.message;
